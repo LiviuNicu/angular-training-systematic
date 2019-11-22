@@ -1,0 +1,17 @@
+<app-private-menu></app-private-menu>
+<input
+  [(ngModel)]="name"
+  class="form-control"
+  (ngModelChange)="onFieldChange()"
+/>
+<hr />
+<table class="table">
+  <tr>
+    <td>
+      Name
+    </td>
+  </tr>
+  <tr *ngFor="let player of players">
+    <td>{{ player.name }}</td>
+  </tr>
+</table>

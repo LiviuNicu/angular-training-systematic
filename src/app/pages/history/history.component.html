@@ -1,0 +1,30 @@
+<app-private-menu></app-private-menu>
+<div class="container">
+  <select
+    [(ngModel)]="selectedPlayer"
+    #selectFilter
+    (ngModelChange)="changeRoute(selectFilter)"
+  >
+    <option value="all">--select user --</option>
+    <option *ngFor="let player of players | async" [value]="player.name">{{
+      player.name
+    }}</option>
+  </select>
+  <table class="table">
+    <tr>
+      <td>Added by</td>
+      <td>Player 1</td>
+      <td>Player 2</td>
+      <td>Date</td>
+    </tr>
+    <tr *ngFor="let game of history">
+      <td>{{ game.addedBy.name }}</td>
+      <td *ngFor="let player of game.players">
+        {{ player.name }} : <b>{{ player.score }}</b>
+      </td>
+      <td>
+        {{ game.dateAdded | date: "short" | uppercase }}
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,63 @@
+<app-menu></app-menu>
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="doRegister()">
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        class="form-control"
+        placeholder="Name ..."
+        formControlName="name"
+      />
+    </div>
+    <div *ngIf="submited && f.name.errors">
+      <div [style.color]="'red'" *ngIf="f.name.errors.required">
+        Name is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        class="form-control"
+        placeholder="Email ..."
+        formControlName="email"
+      />
+    </div>
+    <div *ngIf="submited && f.email.errors">
+      <div [style.color]="'red'" *ngIf="f.email.errors.required">
+        Email is required
+      </div>
+      <div [style.color]="'red'" *ngIf="f.email.errors.email">
+        Invalid Email
+      </div>
+    </div>
+    <div formGroupName="passwords">
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          class="form-control"
+          type="password"
+          placeholder="Password..."
+          formControlName="password"
+        />
+      </div>
+      <div class="form-group">
+        <label>Confirm password</label>
+        <input
+          class="form-control"
+          type="password"
+          formControlName="confirm_password"
+          placeholder="Confirm Password..."
+        />
+      </div>
+    </div>
+    <div *ngIf="submited && f.passwords.errors" [style.color]="'red'">
+      <div *ngIf="f.passwords.errors.invalid">
+        Passwords do not match
+      </div>
+    </div>
+    <hr />
+    <button class="btn btn-primary" id="register" type="submit">
+      Register
+    </button>
+  </form>
+</div>
