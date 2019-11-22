@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
         console.log(response);
       });
     } else {
-      this.error = "This email is not valid";
+      this.error = "This email is not valid !";
       setTimeout(() => {
         this.error = null;
       }, 2000);

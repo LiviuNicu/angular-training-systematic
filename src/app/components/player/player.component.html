@@ -7,7 +7,7 @@
   <h1 [style.textAlign]="'center'">{{ currentPlayer?.score }}</h1>
   <div
     class="alert alert-success"
-    *ngIf="currentPlayer && currentPlayer.isServing"
+    [@openClose]="currentPlayer && currentPlayer.isServing ? 'open' : 'close'"
   >
     SERVING
   </div>

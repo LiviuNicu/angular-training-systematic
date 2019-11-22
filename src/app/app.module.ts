@@ -9,11 +9,15 @@ import { MenuComponent } from "./components/menu/menu.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "./services/auth.service";
 import { HttpClientModule } from "@angular/common/http";
-import { ScoreDisplayComponent } from './pages/score-display/score-display.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { SearchComponent } from './pages/search/search.component';
-import { PrivateMenuComponent } from './components/private-menu/private-menu.component';
-import { PlayerComponent } from './components/player/player.component';
+import { ScoreDisplayComponent } from "./pages/score-display/score-display.component";
+import { HistoryComponent } from "./pages/history/history.component";
+import { SearchComponent } from "./pages/search/search.component";
+import { PrivateMenuComponent } from "./components/private-menu/private-menu.component";
+import { PlayerComponent } from "./components/player/player.component";
+import { HilightIsServingDirective } from "./directives/hilight-is-serving.directive";
+import { IsServingFilterPipe } from "./pipes/is-serving-filter.pipe";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ModalModule } from "ngx-bootstrap/modal";
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,14 +28,18 @@ import { PlayerComponent } from './components/player/player.component';
     HistoryComponent,
     SearchComponent,
     PrivateMenuComponent,
-    PlayerComponent
+    PlayerComponent,
+    HilightIsServingDirective,
+    IsServingFilterPipe
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

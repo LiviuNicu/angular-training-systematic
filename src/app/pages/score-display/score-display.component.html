@@ -56,3 +56,23 @@
     </div>
   </ng-template>
 </div>
+
+<ng-template #winnerModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Success</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    The game is saved! Yeey
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="modalRef.hide()"></button>
+  </div>
+</ng-template>

@@ -1,11 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { Player } from "src/app/interfaces/player";
 import { GameService } from "src/app/services/game.service";
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from "@angular/animations";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-score-display",
   templateUrl: "./score-display.component.html",
+
   styleUrls: ["./score-display.component.scss"]
 })
 export class ScoreDisplayComponent implements OnInit {
@@ -19,9 +28,13 @@ export class ScoreDisplayComponent implements OnInit {
   };
   private playerSubscription;
   winner: Player;
+  modalRef: BsModalRef;
+  @ViewChild("winnerModalTemplate", { static: false }) winnerModalTemplate;
+
   constructor(
     private authService: AuthService,
-    private gameSerice: GameService
+    private gameSerice: GameService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -43,11 +56,14 @@ export class ScoreDisplayComponent implements OnInit {
       winner: false
     };
   }
-
-  updatePlayer() {
-    let sum = this.players.reduce((accumulator, currentItem) => {
+  getSum(players: Player[]) {
+    return players.reduce((accumulator, currentItem) => {
       return (accumulator += currentItem.score);
     }, 0);
+  }
+
+  updatePlayer() {
+    let sum = this.getSum(this.players);
 
     if (sum % 5 == 0) {
       this.players.map(item => {
@@ -66,9 +82,12 @@ export class ScoreDisplayComponent implements OnInit {
     }
   }
   addToHistory() {
-    this.gameSerice.addToHistory(this.players).subscribe(resopnse => {
-      console.log(resopnse);
-    });
+    this.gameSerice.addToHistory(this.players).subscribe(
+      resopnse => {
+        this.modalRef = this.modalService.show(this.winnerModalTemplate);
+      },
+      error => {}
+    );
   }
   logout() {
     this.authService.logout();

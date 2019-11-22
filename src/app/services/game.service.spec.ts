@@ -25,4 +25,36 @@ describe("GameService", () => {
     const service: GameService = TestBed.get(GameService);
     expect(service).toBeTruthy();
   });
+
+  it("be able to retrieve players form API via POST", () => {
+    const dummyPlayers: Player[] = [
+      { name: "test1", score: 0, isServing: false, winner: false, _id: "" },
+      { name: "test2", score: 0, isServing: false, winner: false, _id: "" }
+    ];
+
+    service.search({}).subscribe(players => {
+      expect(players.length).toBe(2);
+      expect(players).toEqual(dummyPlayers);
+    });
+
+    const requst = httpMock.expectOne(service.url + "game/players/search");
+    expect(requst.request.method).toBe("POST");
+    requst.flush(dummyPlayers);
+  });
+
+  it("shuld add one player to players", () => {
+    const fakePlayer: Player = {
+      name: "test",
+      isServing: false,
+      winner: false,
+      score: 0,
+      _id: ""
+    };
+
+    service.addPlayer(fakePlayer);
+    service.playerAsObs.subscribe((players: Player[]) => {
+      expect(players.length).toBe(1);
+      expect(players).toEqual([fakePlayer]);
+    });
+  });
 });

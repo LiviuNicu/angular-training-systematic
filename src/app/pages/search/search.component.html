@@ -4,14 +4,31 @@
   class="form-control"
   (ngModelChange)="onFieldChange()"
 />
+<!-- <label
+  ><input type="radio" [(ngModel)]="isServingState" value="true" />Is
+  Serving</label
+>
+<label
+  ><input type="radio" [(ngModel)]="isServingState" value="false" />Is Not
+  Serving</label
+> -->
+
+<button class="btn btn-success" (click)="isServingState = true">
+  Is Serving
+</button>
+<button class="btn btn-success" (click)="isServingState = false">
+  Is Not Serving
+</button>
 <hr />
-<table class="table">
+<table class="table" *ngIf="players.length">
   <tr>
     <td>
       Name
     </td>
   </tr>
-  <tr *ngFor="let player of players">
-    <td>{{ player.name }}</td>
+  <tr *ngFor="let player of players | isServingFilter: isServingState">
+    <td appHilightIsServing [isServing]="player.isServing">
+      {{ player.name }}
+    </td>
   </tr>
 </table>

@@ -16,12 +16,18 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/private/scoreDisplay">Score</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" (click)="isLoading = true">
         <a class="nav-link" routerLink="/private/history/all">History</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/private/search">Search</a>
       </li>
     </ul>
+  </div>
+
+  <div *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </nav>

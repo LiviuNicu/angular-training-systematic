@@ -31,4 +31,42 @@ describe("LoginComponent", () => {
     loginBtn = fixture.debugElement.query(By.css("#loginBtn"));
     fixture.detectChanges();
   });
+
+  it("email should be valid", () => {
+    const validateEmail = component.validateEmail("test@test.com");
+    expect(validateEmail).toBe(true);
+  });
+  it("email should be invalid", () => {
+    const validateEmail = component.validateEmail("test");
+    expect(validateEmail).toBe(false);
+  });
+  it("Login btn should be disabled", () => {
+    expect(loginBtn.nativeElement.disabled).toBe(true);
+  });
+  it("Login btn should be enabled", () => {
+    component.user.email = "test@test.com";
+    component.user.password = "test";
+    fixture.detectChanges();
+    expect(loginBtn.nativeElement.disabled).toBe(false);
+  });
+
+  it("Email is not valid", () => {
+    component.user.email = "test";
+    component.user.password = "test";
+    component.login();
+    fixture.detectChanges();
+    expect(component.error).toContain("This email is not valid");
+  });
+  it("Login button should have login text inside", () => {
+    expect(loginBtn.nativeElement.innerHTML).toContain("Login");
+  });
+  it("Login function shuld be calld when you click login", () => {
+    spyOn(component, "login");
+    component.user.email = "test@test.com";
+    component.user.password = "test";
+    fixture.detectChanges();
+    loginBtn.nativeElement.click();
+
+    expect(component.login).toHaveBeenCalledTimes(1);
+  });
 });

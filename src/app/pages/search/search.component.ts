@@ -11,7 +11,8 @@ import { debounceTime } from "rxjs/operators";
 })
 export class SearchComponent implements OnInit {
   public name: string = "";
-  players: Player[];
+  players: Player[] = [];
+  isServingState: boolean = false;
   textChanged: Subject<string> = new Subject<string>();
 
   constructor(private gameService: GameService) {}

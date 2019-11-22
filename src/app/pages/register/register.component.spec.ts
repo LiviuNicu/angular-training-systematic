@@ -14,6 +14,14 @@ describe("RegisterComponent", () => {
   let de: DebugElement;
   let el: HTMLElement;
 
+  function updateForm(name, email, password, confirm_password) {
+    component.myForm.controls["name"].setValue(name);
+    component.myForm.controls["email"].setValue(email);
+    component.myForm.get(["passwords", "password"]).setValue(password);
+    component.myForm
+      .get(["passwords", "confirm_password"])
+      .setValue(confirm_password);
+  }
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent, MenuComponent],
@@ -38,5 +46,19 @@ describe("RegisterComponent", () => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it("empty form should be invalid", () => {
+    updateForm("", "", "", "");
+    expect(component.myForm.valid).toBe(false);
+  });
+  it("empty form should be valid", () => {
+    updateForm("test", "test@test.com", "12345", "12345");
+    expect(component.myForm.valid).toBe(true);
+  });
+  it("form should be invalid becouse email is invalid", () => {
+    updateForm("test", "test", "12345", "12345");
+    expect(component.myForm.valid).toBe(false);
+    expect(component.myForm.controls["email"].getError("email")).toBeTruthy();
   });
 });
